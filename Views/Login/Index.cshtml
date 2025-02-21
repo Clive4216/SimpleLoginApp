@@ -1,0 +1,27 @@
+﻿@model Login.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login Form</h2>
+@if(ViewBag.Message != null)
+ {
+     <div style="color:red;">@ViewBag.Message</div>
+ }
+
+
+@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    <div>
+        <label>Username:</label>
+        @Html.TextBoxFor(m => m.Username)
+        <br><br>
+        <label>Password:</label>
+        @Html.PasswordFor(m => m.Password)
+    </div>
+    
+    <div>
+        <input type="submit" value="Login" />
+    </div>
+}
