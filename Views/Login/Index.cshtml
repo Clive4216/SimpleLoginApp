@@ -3,25 +3,83 @@
 @{
     ViewBag.Title = "Login";
 }
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+    }
 
-<h2>Login Form</h2>
-@if(ViewBag.Message != null)
- {
-     <div style="color:red;">@ViewBag.Message</div>
- }
+    .login-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        width: 300px;
+        text-align: center;
+    }
 
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
 
-@using (Html.BeginForm("Index", "Login", FormMethod.Post))
-{
-    <div>
-        <label>Username:</label>
-        @Html.TextBoxFor(m => m.Username)
-        <br><br>
-        <label>Password:</label>
-        @Html.PasswordFor(m => m.Password)
-    </div>
-    
-    <div>
-        <input type="submit" value="Login" />
-    </div>
-}
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+        
+    .form-group {
+        font-family: Arial;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+</style>
+
+<div class="login-container">
+    <h2>Login</h2>
+
+    @if (ViewBag.Message != null)
+    {
+        <div style="color:red;">@ViewBag.Message</div>
+    }
+
+    @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+    {
+        <div class="container">
+            <div class="form-group">
+                <label class="label">Username:</label>
+                @Html.TextBoxFor(m => m.Username)
+                @Html.ValidationMessageFor(m => m.Username)
+            </div>
+            <div class="form-group">
+                <label class="label">Password:</label>
+                  @Html.PasswordFor(m => m.Password)
+            </div>
+        </div>
+
+        <div>
+            <input type="submit" value="Login" />
+        </div>
+    }
+</div>

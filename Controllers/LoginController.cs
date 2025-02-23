@@ -10,7 +10,7 @@ namespace Login.Controllers
     public class LoginController : Controller
     {
         private const string Username = "Clive";
-        private const string Password = "123";
+        private const string Password = "123456789";
 
         // GET: Login
         public ActionResult Index()
