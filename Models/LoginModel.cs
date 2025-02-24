@@ -13,7 +13,8 @@ namespace Login.Models
         public string Username { get; set; }
 
         [Required]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$")]
+        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$")]
+        [RegularExpression(@"^\\d+$")]
         public string Password { get; set; }
     }
 }
