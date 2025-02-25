@@ -19,18 +19,22 @@ namespace Login.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(LoginModel model)
+        public ActionResult Index(UserProfile objUser)
         {
-            if (model.Username == Username && model.Password == Password)
+            if (ModelState.IsValid)
             {
-                Session["Username"] = model.Username;
-                return RedirectToAction("Dashboard");
+                using (DB_Entities db = new DB_Entities())
+                {
+                    var obj = db.UserProfiles.Where(a => a.Username.Equals(objUser.Username) && a.Password.Equals(objUser.Password)).FirstOrDefault();
+                    if (obj != null)
+                    {
+                        Session["UserID"] = obj.UserId.ToString();
+                        Session["UserName"] = obj.Username.ToString();
+                        return RedirectToAction("Dashboard");
+                    }
+                }
             }
-            else
-            {
-                ViewBag.Message = "Invalid Username or Password";
-                return View();
-            }
+            return View(objUser);
         }
 
         public ActionResult Dashboard()

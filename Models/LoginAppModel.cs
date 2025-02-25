@@ -6,13 +6,13 @@ using System.Web;
 
 namespace Login.Models
 {
-    public class LoginModel
+    public class LoginAppModel
     {
-        [Required]
+        [Required(ErrorMessage = "Invalid Username")]
         [StringLength(15, MinimumLength = 4)]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Enter a valid password")]
         //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$")]
         [RegularExpression(@"^\\d+$")]
         public string Password { get; set; }

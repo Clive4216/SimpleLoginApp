@@ -1,10 +1,41 @@
-﻿@model Login.Models.LoginModel
+﻿@model Login.Models.LoginAppModel
 
 @{
     ViewBag.Title = "Login";
 }
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript">
+    function Validate() {
+        var username = document.getElementById("Username");
+        var password = document.getElementById("Password");
+
+        let isValid = true;
+
+        if (username.value.trim() === '') {
+            isValid = false;
+            showError(username, 'Username is required.');
+        }
+
+        if (password.value.length < 8) {
+            isValid = false;
+            showError(password, 'Password must be at least 8 characters long.');
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    }
+
+    function showError(field, message) {
+        let errorDiv = document.createElement('div');
+        
+        errorDiv.className = 'error';
+        errorDiv.innerText = message;
+        
+        field.parentNode.insertBefore(errorDiv, field.nextSibling);
+    }
+</script>
 <style>
     body {
         display: flex;
@@ -54,6 +85,12 @@
         text-align: left;
     }
 
+    .error {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
 </style>
 
 <div class="login-container">
@@ -64,18 +101,18 @@
         <div style="color:red;">@ViewBag.Message</div>
     }
 
-    @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+    @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { onsubmit = "return Validate();"}))
     {
         <div class="container">
             <div class="form-group">
                 <label class="label">Username:</label>
-                @Html.TextBoxFor(m => m.Username)
-                @Html.ValidationMessageFor(m => m.Username)
+                @Html.TextBoxFor(m => m.Username, new { id = "Username"})
+                @*@Html.ValidationMessageFor(m => m.Username)*@
             </div>
             <div class="form-group">
                 <label class="label">Password:</label>
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { id = "Password" })
+                @*@Html.ValidationMessageFor(m => m.Password)*@
             </div>
         </div>
 
