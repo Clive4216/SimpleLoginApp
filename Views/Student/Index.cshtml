@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Login.Student>
+
+@{
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<h2>Students List</h2>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var student in Model)
+    {
+        <tr>
+            <td>@student.roll_no</td>
+            <td>@student.name</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = student.roll_no }) |
+                @Html.ActionLink("Delete", "Delete", new { id = student.roll_no })
+            </td>
+        </tr>
+    }
+</table>
+<a href="@Url.Action("Create")">Add Student</a>

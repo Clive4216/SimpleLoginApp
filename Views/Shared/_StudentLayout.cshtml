@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Student Management</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container">
+        <h2>Student Management</h2>
+        <nav>
+            <a href="@Url.Action("Create", "Student")">Add Student</a> |
+            <a href="@Url.Action("Index", "Student")">View Students</a>
+        </nav>
+        <hr />
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+</body>
+</html>

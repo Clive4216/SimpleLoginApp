@@ -7,19 +7,19 @@ using Login.Business;
 
 namespace Login.Controllers
 {
-    public class StudentController : Controller
+    public class StaffController : Controller
     {
         private readonly business _business;
-
-        public StudentController()
+        public StaffController()
         {
             _business = new business(new DB_Entities());
         }
 
+        // GET: Staff
         public ActionResult Index()
         {
-            var students = _business.GetStudents();
-            return View(students);
+            var staff = _business.GetStaff();
+            return View(staff);
         }
 
         public ActionResult Create()
@@ -28,36 +28,36 @@ namespace Login.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Student student)
+        public ActionResult Create(Staff staff)
         {
             if (ModelState.IsValid)
             {
-                _business.AddStudent(student);
+                _business.AddStaff(staff);
                 return RedirectToAction("Index");
             }
-            return View(student);
+            return View(staff);
         }
 
         public ActionResult Edit(int id)
         {
-            var student = _business.GetStudentById(id);
-            return View(student);
+            var staff = _business.GetStaffById(id);
+            return View(staff);
         }
 
         [HttpPost]
-        public ActionResult Edit(Student student)
+        public ActionResult Edit(Staff staff)
         {
             if (ModelState.IsValid)
             {
-                _business.UpdateStudent(student);
+                _business.UpdateStaff(staff);
                 return RedirectToAction("Index");
             }
-            return View(student);
+            return View(staff);
         }
 
         public ActionResult Delete(int id)
         {
-            _business.DeleteStudent(id);
+            _business.DeleteStaff(id);
             return RedirectToAction("Index");
         }
     }
