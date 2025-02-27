@@ -38,14 +38,14 @@ namespace Login.Controllers
             return View(staff);
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Update(int id)
         {
             var staff = _business.GetStaffById(id);
             return View(staff);
         }
 
         [HttpPost]
-        public ActionResult Edit(Staff staff)
+        public ActionResult Update(Staff staff)
         {
             if (ModelState.IsValid)
             {

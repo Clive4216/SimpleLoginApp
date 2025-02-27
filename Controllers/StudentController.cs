@@ -38,7 +38,7 @@ namespace Login.Controllers
             return View(student);
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Update(int id)
         {
             var student = _business.GetStudentById(id);
             return View(student);
