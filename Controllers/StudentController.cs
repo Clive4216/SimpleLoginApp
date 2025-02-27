@@ -45,7 +45,7 @@ namespace Login.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Student student)
+        public ActionResult Update(Student student)
         {
             if (ModelState.IsValid)
             {

@@ -1,8 +1,56 @@
-﻿
+﻿@model IEnumerable<Login.Staff>
+
 @{
-    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
 }
 
-<h2>Index</h2>
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
 
-<>
+    table.table {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .container {
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+<h2>Staff List</h2>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var staff in Model)
+    {
+        <tr>
+            <td>@staff.id</td>
+            <td>@staff.name</td>
+            <td>@staff.designation</td>
+            <td>
+                @Html.ActionLink("Update", "Update", new { id = staff.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = staff.id })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<hr />
+<div class="container">
+    <a href="@Url.Action("Create", "Staff")">Add Staff</a> |
+    <a href="@Url.Action("Index", "Staff")">View Staff</a>
+</div>

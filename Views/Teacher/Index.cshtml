@@ -3,8 +3,30 @@
 @{
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
 
-<h2>Teacher List</h2>
+        table.table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    th, td {
+        padding: 10px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .container {
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+<h2>Teachers List</h2>
 <table class="table">
     <tr>
         <th>ID</th>
@@ -19,10 +41,15 @@
             <td>@teacher.name</td>
             <td>@teacher.subject_taught</td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = teacher.id }) |
+                @Html.ActionLink("Update", "Update", new { id = teacher.id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = teacher.id })
             </td>
         </tr>
     }
 </table>
-<a href="@Url.Action("Create")">Add Teacher</a>
+<br />
+<hr />
+<div class="container">
+    <a href="@Url.Action("Create", "Teacher")">Add Teacher</a> |
+    <a href="@Url.Action("Index", "Teacher")">View Teachers</a>
+</div>

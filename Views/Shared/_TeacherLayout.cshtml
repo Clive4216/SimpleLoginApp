@@ -1,19 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewBag.Title - Teacher Management</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <title>Teacher Management</title>
 </head>
 <body>
     <div class="container">
         <h2>Teacher Management</h2>
-        <nav>
-            <a href="@Url.Action("Create", "Teacher")">Add Teacher</a> |
-            <a href="@Url.Action("Index", "Teacher")">View Teachers</a>
-        </nav>
         <hr />
         @RenderBody()
     </div>
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 </body>
 </html>
