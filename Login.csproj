@@ -96,6 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\datatables.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\icons8-menu-squared-50.png" />
@@ -110,9 +111,12 @@
       <LastGenOutput>LoginModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\datatables.min.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="SQLfile\SQLScript.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +184,9 @@
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Staff\Index.cshtml" />
     <Content Include="Views\Staff\Create.cshtml" />
+    <Content Include="Views\Student\Update.cshtml" />
+    <Content Include="Views\Teacher\Update.cshtml" />
+    <Content Include="Views\Staff\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,7 +1,7 @@
 ﻿@model Login.Teacher
 
 @{
-    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 
 <style>
@@ -43,9 +43,9 @@
         cursor: pointer;
     }
 
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
 
     a {
         display: block;
@@ -53,25 +53,29 @@
         margin-top: 10px;
     }
 </style>
+<h2>Update Teacher</h2>
+<div class="form-container">
+    @using (Html.BeginForm("Update", "Teacher", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.id)
 
-<h2>Create</h2>
+        <label>ID:</label>
+        @*@Html.DisplayFor(m => m.id)*@
+        <input type="text" value="@Model.id" disabled />
+        <br />
 
-<body>
-    <div class="form-container">
-        @using (Html.BeginForm("Create", "Teacher", FormMethod.Post))
-        {
-            <label>ID:</label>
-            @Html.TextBoxFor(m => m.id, new { required = "required" })
-            <br />
-            <label>Name:</label>
-            @Html.TextBoxFor(m => m.name, new { required = "required" })
-            <br />
-            <label>Subject Taught:</label>
-            @Html.TextBoxFor(m => m.subject_taught, new { required = "required" })
-            <br />
-            <input type="submit" value="Save" />
-        }
-    </div>
-</body>
+        <label>Name:</label>
+        @Html.TextBoxFor(m => m.name, new { required = "required" })
+        <br />
+
+        <label>Subject Taught:</label>
+        @Html.TextBoxFor(m => m.subject_taught, new { required = "required" })
+        <br />
+
+        <input type="submit" value="Save Changes" />
+        <a href="@Url.Action("Index", "Teacher")" class="btn btn-secondary">Cancel</a>
+    }
+</div>
+
 <br />
 <a href="@Url.Action("Index", "Teacher")">Back to List</a>

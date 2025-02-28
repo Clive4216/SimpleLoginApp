@@ -3,7 +3,14 @@
 @{
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
-<style>
+<head>
+
+    <script type="text/javascript" src="~/Scripts/jquery-3.7.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+    <link rel="stylesheet" href="~/Content/datatables.min.css">
+
+</head>
+@*<style>
     table, th, td {
         border: 1px solid black;
     }
@@ -25,29 +32,50 @@
         text-align: center;
         margin-top: 10px;
     }
-</style>
-<h2>Students List</h2>
-<table class="table">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Actions</th>
-    </tr>
-    @foreach (var student in Model)
-    {
-        <tr>
-            <td>@student.roll_no</td>
-            <td>@student.name</td>
-            <td>
-                @Html.ActionLink("Update", "Update", new { id = student.roll_no }) |
-                @Html.ActionLink("Delete", "Delete", new { id = student.roll_no })
-            </td>
-        </tr>
+</style>*@
+<style>
+    h2 {
+        text-align: center;
     }
-</table>
-<br />
-<hr />
-<div class="container">
-    <a href="@Url.Action("Create", "Student")">Add Student</a> |
-    <a href="@Url.Action("Index", "Student")">View Students</a>
-</div>
+</style>
+<body>
+    <h2>Students List</h2>
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.roll_no</td>
+                    <td>@student.name</td>
+                    <td>
+                        @Html.ActionLink("Update", "Update", new { id = student.roll_no }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = student.roll_no })
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <br />
+    <hr />
+    <div class="container">
+        <a href="@Url.Action("Create", "Student")">Add Student</a> |
+        <a href="@Url.Action("Index", "Student")">View Students</a>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+
+    </script>
+</body>
+

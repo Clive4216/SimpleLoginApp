@@ -1,7 +1,7 @@
-﻿@model Login.Teacher
+﻿@model Login.Student
 
 @{
-    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 
 <style>
@@ -53,25 +53,23 @@
         margin-top: 10px;
     }
 </style>
+<h2>Update Student</h2>
 
-<h2>Create</h2>
+<div class="form-container">
+    @using (Html.BeginForm("Update", "Student", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.roll_no)
 
-<body>
-    <div class="form-container">
-        @using (Html.BeginForm("Create", "Teacher", FormMethod.Post))
-        {
-            <label>ID:</label>
-            @Html.TextBoxFor(m => m.id, new { required = "required" })
-            <br />
-            <label>Name:</label>
-            @Html.TextBoxFor(m => m.name, new { required = "required" })
-            <br />
-            <label>Subject Taught:</label>
-            @Html.TextBoxFor(m => m.subject_taught, new { required = "required" })
-            <br />
-            <input type="submit" value="Save" />
-        }
-    </div>
-</body>
+            <label>Roll No:</label>
+            <input type="text" value="@Model.roll_no" disabled />
+        @*<label>Roll No:</label>
+        @Html.TextBoxFor(m => m.roll_no, new { required = "required" })*@
+        <br />
+        <label>Name:</label>
+        @Html.TextBoxFor(m => m.name, new { required = "required" })
+        <br />
+        <input type="submit" value="Save Changes" />
+    }
+</div>
 <br />
-<a href="@Url.Action("Index", "Teacher")">Back to List</a>
+<a href="@Url.Action("Index", "Student")">Back to List</a>
