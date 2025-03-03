@@ -5,9 +5,10 @@
 }
 <head>
 
-    <script type="text/javascript" src="~/Scripts/jquery-3.7.1.js"></script>
-    <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/datatables.min.js"></script>
     <link rel="stylesheet" href="~/Content/datatables.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome-6.7.2.all.min.css" />
 
 </head>
 @*<style>
@@ -49,7 +50,6 @@
                 <th>Actions</th>
             </tr>
         </thead>
-
         <tbody>
             @foreach (var staff in Model)
             {
@@ -58,26 +58,28 @@
                     <td>@staff.name</td>
                     <td>@staff.designation</td>
                     <td>
-                        @Html.ActionLink("Update", "Update", new { id = staff.id }) |
+                        @Html.ActionLink("Update", "Update", new { id = staff.id })  |
                         @Html.ActionLink("Delete", "Delete", new { id = staff.id })
                     </td>
                 </tr>
             }
         </tbody>
-
     </table>
     <br />
     <hr />
     <div class="container">
-        <a href="@Url.Action("Create", "Staff")">Add Staff</a> |
+        <a href="@Url.Action("Create", "Staff")">Add Staff</a>
         <a href="@Url.Action("Index", "Staff")">View Staff</a>
     </div>
 
     <script>
-        $(document).ready(function () {
-            $('#myTable').DataTable();
+        var js = jQuery.noConflict(true);
+
+        js(document).ready(function () {
+            js('#myTable').DataTable();
         });
 
 
     </script>
 </body>
+
