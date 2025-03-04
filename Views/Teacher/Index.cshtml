@@ -3,82 +3,119 @@
 @{
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+
+<h2 class="text-center">Teachers List</h2>
 <head>
 
     <script type="text/javascript" src="~/Scripts/jquery-3.7.1.js"></script>
     <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/font-awesome-6.7.2.all.min.js"></script>
     <link rel="stylesheet" href="~/Content/datatables.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome-6.7.2.all.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-icons.css" />
 
 </head>
-@*<style>
-    table, th, td {
-        border: 1px solid black;
-    }
-
-        table.table {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-    th, td {
-        padding: 10px;
-    }
-
-    h2 {
-        text-align: center;
-    }
-
-    .container {
-        text-align: center;
-        margin-top: 10px;
-    }
-</style>*@
 <style>
     h2 {
         text-align: center;
     }
 </style>
-<body>
-    <h2>Teachers List</h2>
-    <table class="table" id="myTable">
-        <thead>
+
+<table class="cell-border" id="myTable">
+    <thead>
+        <tr>
+            <th id="col-name">ID</th>
+            <th id="col-name">Name</th>
+            <th id="col-name">Subject Taught</th>
+            <th id="col-action">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var teacher in Model)
+        {
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Suject Taught</th>
-                <th>Actions</th>
+                <td>@teacher.id</td>
+                <td>@teacher.name</td>
+                <td>@teacher.subject_taught</td>
+                <td>
+                    <a href="#" onclick="openModal('@Url.Action("Update", "Teacher", new { id = teacher.id })', 'Update Teacher')"
+                       class="btn btn-sm btn-warning" title="Update">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+
+                    <a href="@Url.Action("Delete", "Teacher", new { id = teacher.id })"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this teacher?');">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
             </tr>
-        </thead>
+        }
+    </tbody>
+</table>
 
-        <tbody>
-            @foreach (var teacher in Model)
-            {
-                <tr>
-                    <td>@teacher.id</td>
-                    <td>@teacher.name</td>
-                    <td>@teacher.subject_taught</td>
-                    <td>
-                        @Html.ActionLink("Update", "Update", new { id = teacher.id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = teacher.id })
-                    </td>
-                </tr>
-            }
-        </tbody>
+<a href="#" class="btn btn-outline-success" onclick="openModal('@Url.Action("Create", "Teacher")', 'Add Teacher')">
+    <i class="far fa-plus-square"></i> Add Teacher
+</a>
 
-    </table>
-    <br />
-    <hr />
-    <div class="container">
-        <a href="@Url.Action("Create", "Teacher")">Add Teacher</a> |
-        <a href="@Url.Action("Index", "Teacher")">View Teachers</a>
+<div class="modal fade" id="teacherModal" tabindex="-1" aria-labelledby="teacherModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="teacherModalLabel">Teacher Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent">
+
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        $(document).ready(function () {
-            $('#myTable').DataTable();
+<script>
+    function openModal(url, title) {
+        $("#teacherModalLabel").text(title);
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (data) {
+                $("#modalContent").html(data);
+                $("#teacherModal").modal("show");
+            },
+            error: function () {
+                alert("Error loading form.");
+            }
         });
+    }
 
 
-    </script>
-</body>
+    $(document).on("submit", "#teacherForm", function (e) {
+        e.preventDefault();
 
+        $.ajax({
+            url: $(this).attr("action"),
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (response) {
+                alert("Teacher saved successfully!");
+                $("#teacherModal").modal("hide");
+                location.reload();
+            },
+            error: function () {
+                alert("Error saving teacher.");
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+
+        $('#col-name').css('background-color', 'lightblue');
+        $('#col-action').css('background-color', 'lightblue');
+
+    });
+</script>

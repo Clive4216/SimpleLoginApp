@@ -3,83 +3,125 @@
 @{
     Layout = "~/Views/Shared/_StaffLayout.cshtml";
 }
+
+<h2 class="text-center">Staff List</h2>
 <head>
 
-    <script src="~/Scripts/jquery-3.7.1.js"></script>
-    <script src="~/Scripts/datatables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-3.7.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/font-awesome-6.7.2.all.min.js"></script>
     <link rel="stylesheet" href="~/Content/datatables.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome-6.7.2.all.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-icons.css" />
 
 </head>
-@*<style>
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        table.table {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        th, td {
-            padding: 10px;
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        .container {
-            text-align: center;
-            margin-top: 10px;
-        }
-    </style>*@
 <style>
     h2 {
         text-align: center;
     }
+
+    /*table {
+        border: 2px solid grey;
+    }*/
 </style>
-<body>
-    <h2>Staff List</h2>
-    <table class="table" id="myTable">
-        <thead>
+
+<table class="cell-border" id="myTable">
+    <thead>
+        <tr>
+            <th id="col-name">ID</th>
+            <th id="col-name">Name</th>
+            <th id="col-name">Designation</th>
+            <th id="col-name">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var staff in Model)
+        {
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Designation</th>
-                <th>Actions</th>
+                <td>@staff.id</td>
+                <td>@staff.name</td>
+                <td>@staff.designation</td>
+                <td>
+                    <a href="#" onclick="openModal('@Url.Action("Update", "Staff", new { id = staff.id })', 'Update Staff')"
+                       class="btn btn-sm btn-warning" title="Update">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+
+                    <a href="@Url.Action("Delete", "Staff", new { id = staff.id })"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this staff?');">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var staff in Model)
-            {
-                <tr>
-                    <td>@staff.id</td>
-                    <td>@staff.name</td>
-                    <td>@staff.designation</td>
-                    <td>
-                        @Html.ActionLink("Update", "Update", new { id = staff.id })  |
-                        @Html.ActionLink("Delete", "Delete", new { id = staff.id })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <br />
-    <hr />
-    <div class="container">
-        <a href="@Url.Action("Create", "Staff")">Add Staff</a>
-        <a href="@Url.Action("Index", "Staff")">View Staff</a>
+        }
+    </tbody>
+</table>
+
+<a href="#" class="btn btn-outline-success" onclick="openModal('@Url.Action("Create", "Staff")', 'Add Staff')">
+    <i class="far fa-plus-square"></i> Add Staff
+</a>
+
+<div class="modal fade" id="staffModal" tabindex="-1" aria-labelledby="staffModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staffModalLabel">Staff Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent">
+
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        var js = jQuery.noConflict(true);
+<script>
+    function openModal(url, title) {
+        $("#staffModalLabel").text(title);
 
-        js(document).ready(function () {
-            js('#myTable').DataTable();
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (data) {
+                $("#modalContent").html(data);
+                $("#staffModal").modal("show");
+            },
+            error: function () {
+                alert("Error loading form.");
+            }
         });
+    }
 
 
-    </script>
-</body>
+    $(document).on("submit", "#staffForm", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: $(this).attr("action"),
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (response) {
+                alert("Staff saved successfully!");
+                $("#staffModal").modal("hide");
+                location.reload();
+            },
+            error: function () {
+                alert("Error saving staff.");
+            }
+        });
+    });
+
+    var js = jQuery.noConflict(true);
+    js(document).ready(function () {
+        js('#myTable').DataTable();
+        
+        js('#col-name').css('background-color', 'lightblue');
+        js('#col-action').css('background-color', 'lightblue');
+
+    });
+</script>
 

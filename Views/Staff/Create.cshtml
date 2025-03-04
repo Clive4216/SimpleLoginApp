@@ -1,77 +1,19 @@
 ﻿@model Login.Staff
 
 @{
-    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+    Layout = null;
 }
 
-<style>
-    h2 {
-        text-align: center;
-    }
-
-    .form-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        margin: 0 auto;
-        padding: 20px;
-        width: 350px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    }
-
-
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    input[type="text"], input[type="submit"] {
-        width: 100%;
-        padding: 8px;
-        margin: 5px 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    input[type="submit"] {
-        background-color: #007bff;
-        color: white;
-        cursor: pointer;
-    }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-    a {
-        display: block;
-        text-align: center;
-        margin-top: 10px;
-    }
-</style>
-<h2>Add Staff</h2>
-
-<body>
-    <div class="form-container">
-        @using (Html.BeginForm("Create", "Staff", FormMethod.Post))
-        {
-            <label>ID:</label>
-            @Html.TextBoxFor(m => m.id, new { required = "required" })
-            <br />
-            <label>Name:</label>
-            @Html.TextBoxFor(m => m.name, new { required = "required" })
-            <br />
-            <label>Designation:</label>
-            @Html.TextBoxFor(m => m.designation, new { required = "required" })
-            <input type="submit" value="Save" />
-        }
-
-
-    </div>
-</body>
-<br />
-<a href="@Url.Action("Index", "Staff")">Back to List</a>
+@using (Html.BeginForm("Create", "Staff", FormMethod.Post, new { id = "staffForm" }))
+{
+    <label>ID:</label>
+    @Html.TextBoxFor(m => m.id, new { required = "required", @class = "form-control" })
+    <br />
+    <label>Name:</label>
+    @Html.TextBoxFor(m => m.name, new { required = "required", @class = "form-control" })
+    <br />
+    <label>Designation:</label>
+    @Html.TextBoxFor(m => m.designation, new { required = "required", @class = "form-control" })
+    <br />
+    <button type="submit" class="btn btn-primary">Add</button>
+}
