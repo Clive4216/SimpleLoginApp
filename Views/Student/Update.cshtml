@@ -1,75 +1,18 @@
 ﻿@model Login.Student
 
 @{
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    Layout = null;
 }
 
-<style>
-    h2 {
-        text-align: center;
-    }
+@using (Html.BeginForm("Update", "Student", FormMethod.Post, new { id = "studentForm" }))
+{
+    @Html.HiddenFor(m => m.roll_no)
 
-    .form-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        margin: 0 auto;
-        padding: 20px;
-        width: 350px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    }
-
-
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    input[type="text"], input[type="submit"] {
-        width: 100%;
-        padding: 8px;
-        margin: 5px 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    input[type="submit"] {
-        background-color: #007bff;
-        color: white;
-        cursor: pointer;
-    }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-    a {
-        display: block;
-        text-align: center;
-        margin-top: 10px;
-    }
-</style>
-<h2>Update Student</h2>
-
-<div class="form-container">
-    @using (Html.BeginForm("Update", "Student", FormMethod.Post))
-    {
-        @Html.HiddenFor(m => m.roll_no)
-
-            <label>Roll No:</label>
-            <input type="text" value="@Model.roll_no" disabled />
-        @*<label>Roll No:</label>
-        @Html.TextBoxFor(m => m.roll_no, new { required = "required" })*@
-        <br />
-        <label>Name:</label>
-        @Html.TextBoxFor(m => m.name, new { required = "required" })
-        <br />
-        <input type="submit" value="Save Changes" />
-    }
-</div>
-<br />
-<a href="@Url.Action("Index", "Student")">Back to List</a>
+    <label>Roll No:</label>
+    <input type="text" value="@Model.roll_no" class="form-control" disabled />
+    <br />
+    <label>Name:</label>
+    @Html.TextBoxFor(m => m.name, new { required = "required", @class = "form-control" })
+    <br />
+    <button type="submit" class="btn btn-primary">Update</button>
+}
