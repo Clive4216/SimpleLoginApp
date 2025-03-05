@@ -17,5 +17,6 @@ namespace Login
         public int id { get; set; }
         public string name { get; set; }
         public string designation { get; set; }
+        public Nullable<decimal> salary { get; set; }
     }
 }

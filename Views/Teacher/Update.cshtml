@@ -6,20 +6,20 @@
 
 @using (Html.BeginForm("Update", "Teacher", FormMethod.Post, new { id = "teacherForm" }))
 {
-    @Html.HiddenFor(m => m.id)
+    @Html.HiddenFor(m => m.teacher_id)
 
     <label>ID:</label>
-    <input type="text" value="@Model.id" class="form-control" disabled />
+    <input type="text" value="@Model.teacher_id" class="form-control" disabled />
     <br />
-
     <label>Name:</label>
     @Html.TextBoxFor(m => m.name, new { required = "required", @class = "form-control" })
     <br />
-
     <label>Subject Taught:</label>
     @Html.TextBoxFor(m => m.subject_taught, new { required = "required", @class = "form-control" })
     <br />
-
+    <label>Email:</label>
+    @Html.TextBoxFor(m => m.email, new { required = "required", @class = "form-control" })
+    <br />
     <button type="submit" class="btn btn-primary">Update</button>
     @*<a href="@Url.Action("Index", "Teacher")" class="btn btn-secondary">Cancel</a>*@
 }

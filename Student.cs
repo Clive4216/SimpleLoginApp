@@ -16,6 +16,7 @@ namespace Login
     {
         public int roll_no { get; set; }
         public string name { get; set; }
+        public Nullable<System.DateTime> Enrollment_date { get; set; }
         public Nullable<int> teacher_id { get; set; }
     
         public virtual Teacher Teacher { get; set; }

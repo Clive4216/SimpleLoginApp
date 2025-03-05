@@ -29,6 +29,7 @@
     <thead>
         <tr>
             <th id="col-name">Name</th>
+            <th id="col-enroll">Enrollment Date</th>
             <th id="col-action">Actions</th>
         </tr>
     </thead>
@@ -37,6 +38,7 @@
         {
             <tr>
                 <td>@student.name</td>
+                <td>@student.Enrollment_date</td>
                 <td>
                     <a href="#" onclick="openModal('@Url.Action("Update", "Student", new { id = student.roll_no })', 'Update Student')"
                        class="btn btn-sm btn-warning" title="Update">
@@ -115,6 +117,7 @@
         $('#myTable').DataTable();
 
         $('#col-name').css('background-color', 'lightblue');
+        $('#col-enroll').css('background-color', 'lightblue');
         $('#col-action').css('background-color', 'lightblue');
         
     });

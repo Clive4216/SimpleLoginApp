@@ -29,19 +29,21 @@
 <table class="cell-border" id="myTable">
     <thead>
         <tr>
-            <th id="col-name">ID</th>
+            @*<th id="col-name">ID</th>*@
             <th id="col-name">Name</th>
-            <th id="col-name">Designation</th>
-            <th id="col-name">Actions</th>
+            <th id="col-desig">Designation</th>
+            <th id="col-sal">Salary</th>
+            <th id="col-action">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var staff in Model)
         {
             <tr>
-                <td>@staff.id</td>
+                @*<td>@staff.id</td>*@
                 <td>@staff.name</td>
                 <td>@staff.designation</td>
+                <td>@staff.salary</td>
                 <td>
                     <a href="#" onclick="openModal('@Url.Action("Update", "Staff", new { id = staff.id })', 'Update Staff')"
                        class="btn btn-sm btn-warning" title="Update">
@@ -120,6 +122,8 @@
         js('#myTable').DataTable();
         
         js('#col-name').css('background-color', 'lightblue');
+        js('#col-desig').css('background-color', 'lightblue');
+        js('#col-sal').css('background-color', 'lightblue');
         js('#col-action').css('background-color', 'lightblue');
 
     });

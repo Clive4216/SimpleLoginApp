@@ -7,13 +7,16 @@
 @using (Html.BeginForm("Create", "Teacher", FormMethod.Post, new { id = "studentForm" }))
 {
     <label>ID:</label>
-    @Html.TextBoxFor(m => m.id, new { required = "required", @class = "form-control" })
+    @Html.TextBoxFor(m => m.teacher_id, new { required = "required", @class = "form-control" })
     <br />
     <label>Name:</label>
     @Html.TextBoxFor(m => m.name, new { required = "required", @class = "form-control" })
     <br />
     <label>Subject Taught:</label>
     @Html.TextBoxFor(m => m.subject_taught, new { required = "required", @class = "form-control" })
+    <br />
+    <label>Email:</label>
+    @Html.TextBoxFor(m => m.email, new { required = "required", @class = "form-control" })
     <br />
     <button type="submit" class="btn btn-primary">Add</button>
 }
