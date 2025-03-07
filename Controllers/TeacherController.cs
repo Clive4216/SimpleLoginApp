@@ -18,6 +18,12 @@ namespace Login.Controllers
 
         public ActionResult Index()
         {
+            //var teachers = _business.GetTeachers();
+            //return View(teachers);
+            if (Session["UserRole"] == null || Session["UserRole"].ToString() != "Teacher")
+            {
+                return RedirectToAction("Unauthorized");
+            }
             var teachers = _business.GetTeachers();
             return View(teachers);
         }
@@ -59,6 +65,11 @@ namespace Login.Controllers
         {
             _business.DeleteTeacher(id);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Unauthorized()
+        {
+            return RedirectToAction("Unauthorized");
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Login
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> role_id { get; set; }
+    
+        public virtual Role Role { get; set; }
     }
 }

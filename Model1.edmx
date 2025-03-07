@@ -4,7 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LoginModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="role_name" Type="varchar" MaxLength="15" />
+        </EntityType>
         <EntityType Name="Staff">
           <Key>
             <PropertyRef Name="id" />
@@ -39,7 +46,7 @@
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="15" />
           <Property Name="Password" Type="varchar" MaxLength="15" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="role_id" Type="int" />
         </EntityType>
         <Association Name="FK__Student__teacher__34C8D9D1">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
@@ -53,7 +60,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="LoginModelStoreContainer">
+        <Association Name="UserProfile_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolModelStoreContainer">
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
@@ -62,12 +82,24 @@
             <End Role="Teacher" EntitySet="Teacher" />
             <End Role="Student" EntitySet="Student" />
           </AssociationSet>
+          <AssociationSet Name="UserProfile_Roles" Association="Self.UserProfile_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="LoginModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="SchoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="role_name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserProfiles" Relationship="Self.UserProfile_Roles" FromRole="Roles" ToRole="UserProfile" />
+        </EntityType>
         <EntityType Name="Staff">
           <Key>
             <PropertyRef Name="id" />
@@ -104,8 +136,21 @@
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="role_id" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="Self.UserProfile_Roles" FromRole="UserProfile" ToRole="Roles" />
         </EntityType>
+        <Association Name="UserProfile_Roles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Student__teacher__34C8D9D1">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
           <End Role="Student" Type="Self.Student" Multiplicity="*" />
@@ -119,10 +164,15 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DB_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Staffs" EntityType="Self.Staff" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Teachers" EntityType="Self.Teacher" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+          <AssociationSet Name="UserProfile_Roles" Association="Self.UserProfile_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
           <AssociationSet Name="FK__Student__teacher__34C8D9D1" Association="Self.FK__Student__teacher__34C8D9D1">
             <End Role="Teacher" EntitySet="Teachers" />
             <End Role="Student" EntitySet="Students" />
@@ -133,9 +183,17 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="LoginModelStoreContainer" CdmEntityContainer="DB_Entities">
+        <EntityContainerMapping StorageEntityContainer="SchoolModelStoreContainer" CdmEntityContainer="DB_Entities">
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="SchoolModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Staffs">
-            <EntityTypeMapping TypeName="LoginModel.Staff">
+            <EntityTypeMapping TypeName="SchoolModel.Staff">
               <MappingFragment StoreEntitySet="Staff">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -145,7 +203,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Students">
-            <EntityTypeMapping TypeName="LoginModel.Student">
+            <EntityTypeMapping TypeName="SchoolModel.Student">
               <MappingFragment StoreEntitySet="Student">
                 <ScalarProperty Name="roll_no" ColumnName="roll_no" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -155,7 +213,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Teachers">
-            <EntityTypeMapping TypeName="LoginModel.Teacher">
+            <EntityTypeMapping TypeName="SchoolModel.Teacher">
               <MappingFragment StoreEntitySet="Teacher">
                 <ScalarProperty Name="teacher_id" ColumnName="teacher_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -165,12 +223,12 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserProfiles">
-            <EntityTypeMapping TypeName="LoginModel.UserProfile">
+            <EntityTypeMapping TypeName="SchoolModel.UserProfile">
               <MappingFragment StoreEntitySet="UserProfile">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

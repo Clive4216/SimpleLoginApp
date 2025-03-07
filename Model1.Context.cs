@@ -25,6 +25,7 @@ namespace Login
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }

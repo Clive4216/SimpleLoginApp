@@ -77,9 +77,21 @@
 <body>
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times</a>
-        <a href="@Url.Action("Index", "Student")">Student</a>
+        @*<a href="@Url.Action("Index", "Student")">Student</a>
         <a href="@Url.Action("Index", "Teacher")">Teacher</a>
-        <a href="@Url.Action("Index", "Staff")">Staff</a>
+        <a href="@Url.Action("Index", "Staff")">Staff</a>*@
+        @if (Session["UserRole"] != null && Session["UserRole"].ToString() == "Student")
+        {
+            <a href="@Url.Action("Index", "Student")">Student</a>
+        }
+        @if (Session["UserRole"] != null && Session["UserRole"].ToString() == "Teacher")
+        {
+            <a href="@Url.Action("Index", "Teacher")">Teacher</a>
+        }
+        @if (Session["UserRole"] != null && Session["UserRole"].ToString() == "Staff")
+        {
+            <a href="@Url.Action("Index", "Staff")">Staff</a>
+        }
     </div>
     <span onclick="openNav()"></span>
 

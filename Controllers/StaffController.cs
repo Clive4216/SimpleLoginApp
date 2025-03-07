@@ -18,6 +18,10 @@ namespace Login.Controllers
         // GET: Staff
         public ActionResult Index()
         {
+            if (Session["UserRole"] == null || Session["UserRole"].ToString() != "Staff")
+            {
+                return RedirectToAction("Unauthorized");
+            }
             var staff = _business.GetStaff();
             return View(staff);
         }
@@ -59,6 +63,11 @@ namespace Login.Controllers
         {
             _business.DeleteStaff(id);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Unauthorized()
+        {
+            return RedirectToAction("Unauthorized");
         }
     }
 }

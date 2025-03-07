@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace Login.Controllers
 {
     public class LoginController : Controller
     {
-        private const string Username = "Clive";
-        private const string Password = "123456789";
+        //private const string Username = "Clive";
+        //private const string Password = "123456789";
 
         // GET: Login
         public ActionResult Index()
@@ -25,11 +26,15 @@ namespace Login.Controllers
             {
                 using (DB_Entities db = new DB_Entities())
                 {
-                    var obj = db.UserProfiles.Where(a => a.Username.Equals(objUser.Username) && a.Password.Equals(objUser.Password)).FirstOrDefault();
+                    var obj = db.UserProfiles
+                                .Include(u => u.Role) 
+                                .Where(a => a.Username.Equals(objUser.Username) && a.Password.Equals(objUser.Password))
+                                .FirstOrDefault();
                     if (obj != null)
                     {
                         Session["UserID"] = obj.UserId.ToString();
                         Session["UserName"] = obj.Username.ToString();
+                        Session["UserRole"] = obj.Role.role_name; 
                         return RedirectToAction("Dashboard");
                     }
                 }
@@ -50,5 +55,7 @@ namespace Login.Controllers
             Session.Clear();
             return RedirectToAction("Index");
         }
+
+        
     }
 }

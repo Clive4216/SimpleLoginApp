@@ -16,8 +16,13 @@ namespace Login.Controllers
             _business = new business(new DB_Entities());
         }
 
+        //[Authorize(Roles = "Admin,Student")]
         public ActionResult Index()
         {
+            if (Session["UserRole"] == null || Session["UserRole"].ToString() != "Student")
+            {
+                return RedirectToAction("Unauthorized");
+            }
             var students = _business.GetStudents();
             return View(students);
         }
