@@ -27,14 +27,14 @@ namespace Login.Controllers
                 using (DB_Entities db = new DB_Entities())
                 {
                     var obj = db.UserProfiles
-                                .Include(u => u.Role)  
+                                .Include(u => u.Role)
                                 .Where(a => a.Username.Equals(objUser.Username) && a.Password.Equals(objUser.Password))
                                 .FirstOrDefault();
                     if (obj != null)
                     {
                         Session["UserID"] = obj.UserId.ToString();
                         Session["UserName"] = obj.Username.ToString();
-                        Session["UserRole"] = obj.Role.role_name; 
+                        Session["UserRole"] = obj.Role.role_name;
                         return RedirectToAction("Dashboard");
                     }
                 }
@@ -56,6 +56,6 @@ namespace Login.Controllers
             return RedirectToAction("Index");
         }
 
-        
+
     }
 }

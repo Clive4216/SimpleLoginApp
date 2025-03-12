@@ -2,6 +2,10 @@
     ViewBag.Title = "Unauthorized";
 }
 
+@{
+    Layout = null;
+}
+
 <h2>Unauthorized Access</h2>
 <p>You do not have permission to view this page.</p>
 <a href="@Url.Action("Index", "Login")">Return to Login</a>

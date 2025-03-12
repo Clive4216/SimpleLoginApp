@@ -65,5 +65,10 @@ namespace Login.Controllers
             _business.DeleteStudent(id);
             return RedirectToAction("Index");
         }
+
+        public ActionResult Unauthorized()
+        {
+            return View();
+        }
     }
 }

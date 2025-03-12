@@ -67,7 +67,7 @@ namespace Login.Controllers
 
         public ActionResult Unauthorized()
         {
-            return RedirectToAction("Unauthorized");
+            return View();
         }
     }
 }
