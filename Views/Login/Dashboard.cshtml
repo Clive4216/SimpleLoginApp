@@ -18,12 +18,4 @@
 
 <a href="@Url.Action("Logout", "Login")">Logout</a>
 
-@if (Session["UserRole"] != null)
-{
-    <p>User Role: @Session["UserRole"]</p>
-}
-else
-{
-    <p>Session is null</p>
-}
 
