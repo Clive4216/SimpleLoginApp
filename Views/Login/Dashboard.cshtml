@@ -3,19 +3,66 @@
     ViewBag.Title = "Dashboard";
 }
 
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #f4f4f4;
-    }
-</style>
+@*<style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+    </style>
 
-<h2>Login Successful</h2>
+    <h2>Login Successful</h2>*@
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<div id="content-area">
+    <h2>Welcome to Dashboard</h2>
+    
+</div>
 
 <a href="@Url.Action("Logout", "Login")">Logout</a>
 
+<script>
+    function loadStudents() {
+        $.ajax({
+            url: '@Url.Action("GetStudents", "Student")',
+            type: 'GET',
+            success: function (data) {
+                var tableBody = $("#myTable tbody");
+                tableBody.empty(); // Clear old data
 
+                $.each(data, function (index, student) {
+                    var row = `<tr>
+                        <td>${student.name}</td>
+                        <td>${student.Enrollment_date}</td>
+                        <td>
+                            <a href="#" onclick="openModal('@Url.Action("Update", "Student", new { id = "' + student.roll_no + '" })', 'Update Student')"
+                               class="btn btn-sm btn-warning" title="Update">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a href="@Url.Action("Delete", "Student")/${student.roll_no}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this student?');">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>`;
+                    tableBody.append(row);
+                });
+
+                $('#myTable').DataTable(); // Reinitialize DataTable
+            },
+            error: function () {
+                alert("Error loading student data.");
+            }
+        });
+    }
+
+    // Attach click event to the Student menu item
+    $(document).on("click", "#student-menu", function () {
+        $("#content-area").load('@Url.Action("_StudentList", "Student")', function () {
+            loadStudents();
+        });
+    });
+</script>

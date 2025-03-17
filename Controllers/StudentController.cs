@@ -70,5 +70,18 @@ namespace Login.Controllers
         {
             return View();
         }
+
+        public JsonResult GetStudents()
+        {
+            var students = _business.GetStudents();
+            return Json(students, JsonRequestBehavior.AllowGet);
+                      
+        }
+
+        //public ActionResult _StudentList()
+        //{
+        //    return PartialView();
+        //}
+
     }
 }
