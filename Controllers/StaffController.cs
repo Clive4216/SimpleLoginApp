@@ -69,5 +69,23 @@ namespace Login.Controllers
         {
             return View();
         }
+
+        public JsonResult GetStaff()
+        {
+            var staff = _business.GetStaff().Select(st => new
+            {
+                st.name,
+                st.designation,
+                st.salary
+            }).ToList();
+
+            return Json(staff, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _StaffList()
+        {
+            var staff = _business.GetStaff();
+            return PartialView(staff);
+        }
     }
 }

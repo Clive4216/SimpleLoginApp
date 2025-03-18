@@ -12,6 +12,7 @@ namespace Login.Controllers
         {
             public string Text { get; set; }
             public string Url { get; set; }
+            public string Id { get; set; }
         }
 
         public JsonResult GetNavigationItems()
@@ -21,15 +22,15 @@ namespace Login.Controllers
 
             if (userRole == "Student")
             {
-                navigationItems.Add(new NavigationItem { Text = "Student", Url = Url.Action("Index", "Student") });
+                navigationItems.Add(new NavigationItem { Text = "Student", Id = "student-menu" });
             }
             else if (userRole == "Teacher")
             {
-                navigationItems.Add(new NavigationItem { Text = "Teacher", Url = Url.Action("Index", "Teacher") });
+                navigationItems.Add(new NavigationItem { Text = "Teacher", Id = "teacher-menu" });
             }
             else if (userRole == "Staff")
             {
-                navigationItems.Add(new NavigationItem { Text = "Staff", Url = Url.Action("Index", "Staff") });
+                navigationItems.Add(new NavigationItem { Text = "Staff", Id = "staff-menu" });
             }
 
             return Json(navigationItems, JsonRequestBehavior.AllowGet);

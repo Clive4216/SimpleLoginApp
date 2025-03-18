@@ -72,5 +72,23 @@ namespace Login.Controllers
             //return RedirectToAction("Unauthorized");
             return View();
         }
+
+        public JsonResult GetTeachers()
+        {
+            var teachers = _business.GetTeachers().Select(t => new
+            {
+                t.name,
+                t.subject_taught,
+                t.email
+            }).ToList();
+
+            return Json(teachers, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult _TeacherList()
+        {
+            var teachers = _business.GetTeachers();
+            return PartialView(teachers);
+        }
     }
 }

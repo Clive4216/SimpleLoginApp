@@ -26,7 +26,7 @@
                     sidenav.find('a:not(.closebtn)').remove();
 
                     data.forEach(function (item) {
-                        sidenav.append('<a id="student-menu" href="javascript:void(0)">Student</a>'/* + item.Url + '">' + item.Text + '</a>'*/);
+                        sidenav.append('<a id="' + item.Id + '" href="javascript:void(0)">'/* + item.Url + '">'*/ + item.Text + '</a>');
                     });
                 },
                 error: function () {
